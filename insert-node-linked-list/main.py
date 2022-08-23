@@ -39,6 +39,13 @@ class SinglyLinkedList:
             print(current.data)        
 
 
+def print_llist(llist:SinglyLinkedList):
+    current = llist.head
+    print(current.data)
+    while current.next != None:
+        current = current.next
+        print(current.data)        
+
 def insert_node_at_position(llist: SinglyLinkedList, data: int, position: int):
     current = llist.head
     node = SinglyLinkedListNode(data)
