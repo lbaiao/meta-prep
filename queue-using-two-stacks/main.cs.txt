@@ -1,0 +1,102 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+class Node {
+    public int? Data { get; set; }
+    public Node? Next { get; set; }
+    
+    public Node(int? data, Node? next = null) {
+        Data = data;
+        Next = next;
+    }
+}
+
+class Stack {
+    public Node? Top { get; set; }
+    
+    public Stack(Node? node = null) {
+        Top = node;
+    }
+    
+    public void Push(int? data) {
+        if (data is null) {
+            return;
+        }
+        Node node = new Node(data);
+        node.Next = Top;
+        Top = node;        
+    }
+    
+    public int? Pop() {
+        if (Top is null) {
+            return null;
+        }
+        int? data = Top.Data;
+        Top = Top.Next;
+        return data;
+    }
+    
+    public bool IsEmpty() {
+        return Top == null;
+    }
+}
+
+class Queue {
+    public Stack EnStack { get; set; }
+    public Stack DeStack { get; set; }
+    
+    public Queue() {
+        EnStack = new Stack();
+        DeStack = new Stack();
+    }
+    
+    public void popEnStack() {
+        while (!DeStack.IsEmpty()) {
+            EnStack.Push(DeStack.Pop());
+        }        
+    }
+    
+    public void Enqueue(int data) {
+        popEnStack();
+        EnStack.Push(data);
+    }
+    
+    public void popDeStack() {
+        while (!EnStack.IsEmpty()) {
+            DeStack.Push(EnStack.Pop());
+        }
+    }
+    
+    public int? Dequeue() {
+        popDeStack();
+        return DeStack.Pop();
+    }
+}
+
+
+class Solution {
+    static void Main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
+        var queue = new Queue();
+        
+        var n = Int16.Parse(Console.ReadLine().Trim(' '));        
+        for (int i = 0; i < n; i++) {
+            var line = Console.ReadLine().Trim(' ');
+            var lineCode = line[0];
+            switch (lineCode) {
+                case '1':
+                    var data = Int32.Parse(line.Split(" ")[1]);
+                    queue.Enqueue(data);
+                    break;
+                case '2':
+                    queue.Dequeue();
+                    break;
+                case '3':
+                    queue.popDeStack();
+                    Console.WriteLine(queue.DeStack.Top.Data);
+                    break;
+            }
+        }
+    }
+}

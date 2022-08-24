@@ -1,0 +1,61 @@
+class Node:
+    def __init__(self, data, next=None):
+        self.data = data
+        self.next = next
+
+
+class Stack:
+    def __init__(self, top=None):
+        self.top = top
+
+    def push(self, data):
+        node = Node(data)
+        node.next = self.top
+        self.top = node
+
+    def pop(self):
+        data = self.top.data
+        self.top = self.top.next
+        return data
+
+    def is_empty(self):
+        return self.top is None
+
+
+class Queue:
+    def __init__(self):
+        self.enqueueStack = Stack()
+        self.dequeueStack = Stack()
+        
+    def populateEnqueueStack(self):
+        while not self.dequeueStack.is_empty():
+            self.enqueueStack.push(self.dequeueStack.pop())
+
+    def enqueue(self, data):
+        self.populateEnqueueStack()
+        self.enqueueStack.push(data)
+        
+    def populateDequeueStack(self):
+        while not self.enqueueStack.is_empty():
+            self.dequeueStack.push(self.enqueueStack.pop())
+        
+    def dequeue(self):
+        self.populateDequeueStack()
+        self.dequeueStack.pop()
+        
+        
+if __name__ == '__main__':
+    queue = Queue()
+    
+    n = int(input().strip())
+    for _ in range(n):
+        line = input().strip()
+        query_code = line[0]      
+        if (query_code == '1'):
+            data = int(line.split(' ')[1])
+            queue.enqueue(data)
+        elif (query_code == '2'):
+            queue.dequeue()
+        elif (query_code == '3'):
+            queue.populateDequeueStack()
+            print(queue.dequeueStack.top.data)
