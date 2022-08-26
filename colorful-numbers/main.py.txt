@@ -1,0 +1,31 @@
+def get_sequences(number):
+    txt_number = str(number)
+    len_number = len(txt_number)
+    sequences = []
+    for i in range(len_number):
+        windows = [j + 1 for j in range(len_number - i)]
+        sub_seqs = [txt_number[i:i+j] for j in windows]
+        sequences += sub_seqs
+    return sequences
+
+
+def get_seq_products(sequence):
+    product = 1
+    for s in sequence:
+        product *= int(s)
+    return product
+
+
+def is_colorful(number):
+    sequences = get_sequences(number)
+    print(sequences)
+    products = [get_seq_products(n) for n in sequences]
+    print(products)
+    return len(set(products)) == len(products)
+
+
+if __name__ == '__main__':
+# number = 3245
+    number = 326
+    print(is_colorful(number))
+
