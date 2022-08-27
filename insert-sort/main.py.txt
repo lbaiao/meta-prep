@@ -1,0 +1,30 @@
+# https://www.hackerrank.com/challenges/insertionsort1/problem?isFullScreen=true
+# def insertion_sort(n, arr):
+#     for i in list(range(n))[::-1]:
+#         if arr[n] >= arr[i] or i == 0:
+#             arr.insert(i + 1, arr.pop())
+#             return arr
+
+
+def insertion_sort1(n, arr):
+    in_element = arr[n-1]
+    for i in list(range(n-1))[::-1]:
+        if in_element <= arr[i]:
+            arr[i+1] = arr[i]
+            print(''.join([str(a) + ' ' for a in arr]),)
+        else:
+            arr[i+1] = in_element
+            break
+    if (in_element <= arr[0]):
+        arr[0] = in_element
+    print(''.join([str(a) + ' ' for a in arr]),)
+
+
+if __name__ == '__main__':
+    arr1 = [1, 2, 4, 5, 3]
+    arr2 = [2, 4, 6, 8, 3]
+# arr2 = [2, 4, 6, 8, 0]
+
+#    insertion_sort1(5, arr1)
+    insertion_sort1(5, arr2)
+

@@ -1,0 +1,31 @@
+# https://www.hackerrank.com/challenges/qheap1/problem
+
+import heapq
+
+def parent_index(index):
+    return int((index - 2)/2)
+
+def left_index(index):
+    return index * 2 + 1
+
+def right_index(index):
+    return index * 2 + 2
+
+if __name__ == '__main__':
+    heap = []
+    del_set = set()
+
+    Q = int(input().strip())
+    for _ in range(Q):
+        line = input().strip()
+        query = line[0]
+        if query == '1':
+            value = int(line.split(' ')[1])
+            heapq.heappush(heap, value)
+        elif query == '2':
+            value = int(line.split(' ')[1])            
+            del_set.add(value)
+        elif query == '3':
+            while heap[0] in del_set:
+                heapq.heappop(heap)      
+            print(heap[0])

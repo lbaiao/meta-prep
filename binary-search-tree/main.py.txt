@@ -1,0 +1,18 @@
+class Node:
+    def __init__(self, val):
+        self.info = val
+        self.left = None
+        self.right = None
+
+    def insert(self, val):
+        if val <= self.info:
+            if self.left is None:
+                self.left = self(val)
+            else:
+                self.left.insert(val)
+        else:
+            if self.right is None:
+                self.right = self(val)
+            else:
+                self.right.insert(val)
+
