@@ -1,0 +1,36 @@
+from collections import deque
+
+def bfs(n, m, edges, s):
+	'''
+	n: number of nodes, m: number of edges, edges:, s: starting node
+	'''
+	distances = [-1] * n
+	visited = [False] * n
+	distances[s-1] = 0
+	next_to_visit = deque([s-1])
+	edges = deque([edges])
+	weight = 6
+
+	while len(next_to_visit) > 0:
+		node = next_to_visit.popleft()
+		visited[node] = True
+		node_edges = []
+		helper_edges = []
+		while len(edges):
+			if edges[0][0] == node + 1:
+				node_edges.append(edges.popleft())
+			else:
+				helper_edges.append(edges.popleft())
+		edges = deque(helper_edges)
+
+		for e in node_edges:
+			next_node = e[1] - 1
+
+			if distances[next_node] == -1:
+				distances[next_node] = distances[node] + weight
+
+			if not visited[next_node]:
+				next_to_visit.append(next_node)
+
+	return [d for d in distances if d != 0]
+
